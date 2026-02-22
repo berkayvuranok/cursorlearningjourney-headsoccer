@@ -1,12 +1,12 @@
 ---
-description: Commit message conventions and types
+description: Commit format MUST be type: description (lowercase type, colon, space). Never "Update X" - use "update: X". Apply for "Update commit message" and any commit generation.
 alwaysApply: false
 globs: []
 ---
 
 # Commit Conventions
 
-Use conventional commits. Format: `type(scope): description`
+**When generating commit messages: read [commits.md](../../commits.md). Output MUST be `type: description` – lowercase type + colon + space + description. Never output "Update ..." or "Add ..." without the colon. Always: `update: ...`, `add: ...`, `fix: ...`.**
 
 ## Types
 
@@ -32,10 +32,12 @@ Use conventional commits. Format: `type(scope): description`
 | security | Vulnerabilities |
 | hotfix | Urgent bug fix |
 
-## Example
+## Examples
 
 ```
-feat(game): add tap-to-play on home screen
+add: location picker added
+update: goal detection logic
+fix: ball bouncing off goal zone
 ```
 
 ## Sign-off

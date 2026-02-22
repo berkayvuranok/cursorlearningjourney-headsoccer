@@ -2,8 +2,15 @@
 
 ## Format
 
+**MANDATORY:** Always use `type: description` – lowercase type, colon, space, then description.
+
+- ✅ `update: home screen layout`
+- ✅ `add: location picker`
+- ❌ `Update home screen` (no colon, capitalized)
+- ❌ `update home screen` (missing colon)
+
 ```
-type(scope): short description
+type: short description
 ```
 
 ## Types

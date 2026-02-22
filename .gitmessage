@@ -1,5 +1,6 @@
-<type>(<scope>): <short description>
+<type>: <short description>
 
+# Format: type: description (colon required)
 # Body (optional)
 # 
 # Longer explanation of the change if needed.
