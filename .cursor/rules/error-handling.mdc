@@ -1,0 +1,12 @@
+---
+description: Error handling and reporting conventions
+alwaysApply: false
+globs: ["**/*.dart"]
+---
+
+# Error Handling
+
+- Wrap async operations in try-catch
+- Return safe defaults on error (null, empty list, etc.)
+- Platform check before platform-specific code: `kIsWeb`, `Platform.isX`
+- In Cubit: `stateChanger(state.copyWith(status: error, errorMessage: e.toString()))`

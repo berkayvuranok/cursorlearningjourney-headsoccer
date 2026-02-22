@@ -1,0 +1,13 @@
+---
+description: Flutter Flame game development patterns (Head Soccer, Kafa Topu)
+globs: ["**/*.dart"]
+alwaysApply: false
+---
+
+# Flutter Flame Game Rules
+
+- Use `@override` when extending `FlameGame` or `Component`
+- Use `images.load()` or `loadSprite()` for sprites/assets
+- Prefer `HitboxRectangle` or `HitboxCircle` for collision
+- Use `HasGameReference<KafaTopuGame>` (HasGameRef is deprecated)
+- For Vector2 to Offset: `Offset(size.x/2, size.y/2)`

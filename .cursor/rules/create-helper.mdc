@@ -1,0 +1,27 @@
+---
+description: Create helper classes (Cursor Edu / MasterFabric style)
+alwaysApply: false
+globs: ["**/*.dart"]
+---
+
+# Create Helper Rule
+
+Helper classes go under `packages/cursor_edu_core/lib/src/helper/`.
+
+## Structure
+
+- PascalCase + Helper: `StorageHelper`, `GameStateHelper`
+- Stateless or singleton
+- Platform check: `kIsWeb`, `Platform.isX` before platform-specific code
+
+## Example
+
+```dart
+class StorageHelper {
+  StorageHelper._();
+  static final StorageHelper instance = StorageHelper._();
+
+  Future<void> setString(String key, String value) async { ... }
+  String? getString(String key) { ... }
+}
+```

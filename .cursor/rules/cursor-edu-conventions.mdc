@@ -1,0 +1,53 @@
+---
+description: Cursor Edu conventions - MasterFabric-style MVVM+BLoC, naming, state management, DI
+alwaysApply: false
+globs: ["**/*.dart"]
+---
+
+# Cursor Edu Conventions
+
+Follows MasterFabric Core architecture. These rules apply to cursor_edu projects.
+
+## Import Order
+
+1. Dart SDK (`dart:async`, `dart:io`)
+2. Flutter SDK (`package:flutter/...`)
+3. Flutter packages (alphabetically)
+4. cursor_edu_core / cursor_edu_game
+5. Relative imports (same module)
+
+## Naming
+
+| Type | Convention | Example |
+|------|------------|---------|
+| File | snake_case | `splash_view.dart`, `game_cubit.dart` |
+| Class | PascalCase | `SplashView`, `GameCubit` |
+| Cubit | PascalCase + Cubit | `HomeCubit`, `GameCubit` |
+| State | PascalCase + State | `HomeState`, `GameState` |
+| Helper | PascalCase + Helper | `StorageHelper`, `DateTimeHelper` |
+| Variable | camelCase | `viewModel`, `errorMessage` |
+| Private | _camelCase | `_prefs`, `_buildWidget()` |
+
+## State Classes
+
+- Extend `Equatable`
+- Use `copyWith()` for all updates
+- Implement `props`
+- Use `const` constructors
+
+## Cubits
+
+- Extend `BaseViewModelCubit` (cursor_edu_core)
+- Use `stateChanger()` for state updates, do not call `emit` directly
+- Use `@injectable` for DI
+
+## Views
+
+- Extend `MasterView` or `MasterViewCubit`
+- `initialContent(cubit, context)` – called once on init
+- `viewContent(context, cubit, state)` – build UI
+
+## Error Handling
+
+- Wrap async operations in try-catch, return safe defaults
+- Platform checks: `kIsWeb`, `Platform.isX`

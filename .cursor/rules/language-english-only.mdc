@@ -1,0 +1,29 @@
+---
+description: All project documentation, code comments, and user-facing text must be in English only
+alwaysApply: true
+---
+
+# Language Rule: English Only
+
+**All written content in this project must be in English.**
+
+## Scope
+
+- **Rules** (`.mdc`): Descriptions, titles, and body content
+- **Skills** (SKILL.md): Descriptions, instructions, examples
+- **Documentation**: README, ARCHITECTURE, AGENTS.md, comments
+- **Code**: Comments, docstrings, variable names, string literals
+- **UI**: User-facing labels, messages, button text
+
+## Rationale
+
+- Consistency across contributors and tooling
+- Broader accessibility for international collaboration
+- Standard practice in open-source and professional projects
+- AI and static analysis tools work best with a single language
+
+## Enforcement
+
+- Do not add Turkish or other non-English content
+- When creating new files, write in English
+- When editing existing content, translate any non-English text to English

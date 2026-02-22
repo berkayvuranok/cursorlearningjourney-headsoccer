@@ -1,0 +1,96 @@
+---
+description: Step-by-step guide to create a new view with State, Cubit, and MasterView (Cursor Edu / MasterFabric style)
+alwaysApply: false
+globs: ["**/*.dart"]
+---
+
+# Create View Rule
+
+Follow this rule when creating a new feature view.
+
+## Directory Structure
+
+```
+lib/src/features/[feature_name]/
+├── presentation/
+│   ├── [feature_name]_screen.dart
+│   ├── [feature_name]_cubit.dart
+│   └── [feature_name]_state.dart
+├── domain/
+│   └── entities/          # (optional)
+└── data/                  # (optional)
+```
+
+## Step 1: State
+
+```dart
+import 'package:equatable/equatable.dart';
+
+enum MyFeatureStatus { initial, loading, success, error }
+
+class MyFeatureState extends Equatable {
+  final MyFeatureStatus status;
+  final String? errorMessage;
+
+  const MyFeatureState({
+    this.status = MyFeatureStatus.initial,
+    this.errorMessage,
+  });
+
+  MyFeatureState copyWith({...}) => MyFeatureState(...);
+
+  @override
+  List<Object?> get props => [status, errorMessage];
+}
+```
+
+## Step 2: Cubit
+
+```dart
+import 'package:cursor_edu_core/cursor_edu_core.dart';
+
+class MyFeatureCubit extends BaseViewModelCubit<MyFeatureState> {
+  MyFeatureCubit() : super(const MyFeatureState());
+
+  Future<void> loadData() async {
+    stateChanger(state.copyWith(status: MyFeatureStatus.loading));
+    try {
+      stateChanger(state.copyWith(status: MyFeatureStatus.success));
+    } catch (e) {
+      stateChanger(state.copyWith(
+        status: MyFeatureStatus.error,
+        errorMessage: e.toString(),
+      ));
+    }
+  }
+}
+```
+
+## Step 3: View
+
+```dart
+import 'package:flutter/material.dart';
+import 'package:cursor_edu_core/cursor_edu_core.dart';
+
+class MyFeatureScreen extends MasterView<MyFeatureCubit, MyFeatureState> {
+  MyFeatureScreen({super.key}) : super(cubit: MyFeatureCubit());
+
+  @override
+  void initialContent(MyFeatureCubit cubit, BuildContext context) {
+    cubit.loadData();
+  }
+
+  @override
+  Widget viewContent(BuildContext context, MyFeatureCubit cubit, MyFeatureState state) {
+    if (state.status == MyFeatureStatus.loading) return const LoadingView();
+    if (state.status == MyFeatureStatus.error) return ErrorView(message: state.errorMessage);
+    return _buildContent(state);
+  }
+}
+```
+
+## Checklist
+
+- [ ] State extends Equatable, copyWith(), props
+- [ ] Cubit extends BaseViewModelCubit, uses stateChanger()
+- [ ] View extends MasterView, initialContent + viewContent

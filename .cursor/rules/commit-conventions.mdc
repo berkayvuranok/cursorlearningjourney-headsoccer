@@ -1,0 +1,51 @@
+---
+description: Commit message conventions and types
+alwaysApply: false
+globs: []
+---
+
+# Commit Conventions
+
+Use conventional commits. Format: `type(scope): description`
+
+## Types
+
+| Type | Description |
+|------|-------------|
+| feat | A new feature |
+| fix | Bug fix |
+| chore | Non-src/test changes (deps, config) |
+| refactor | Code change, no bug/feature |
+| docs | Documentation |
+| style | Formatting, white-space |
+| test | Tests |
+| perf | Performance |
+| ci | CI |
+| build | Build / deps |
+| revert | Revert previous |
+| add | Add file/function/method/variable |
+| remove | Remove file/function/method/variable |
+| update | Update existing |
+| rename | Rename |
+| move | Move |
+| copy | Copy |
+| security | Vulnerabilities |
+| hotfix | Urgent bug fix |
+
+## Example
+
+```
+feat(game): add tap-to-play on home screen
+```
+
+## Sign-off
+
+Include: `Signed-off-by: @gurkanfikretgunak` in commit footer when applicable.
+
+## Template
+
+Project uses `.gitmessage`. Enable:
+
+```bash
+git config commit.template .gitmessage
+```
