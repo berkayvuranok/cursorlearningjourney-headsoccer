@@ -1,0 +1,29 @@
+<type>(<scope>): <short description>
+
+# Body (optional)
+# 
+# Longer explanation of the change if needed.
+# Wrap at 72 characters.
+
+# Types:
+#   feat     – a new feature is introduced with the changes
+#   fix      – a bug fix has occurred
+#   chore    – changes that do not relate to a fix or feature (e.g. deps, config)
+#   refactor – refactored code that neither fixes a bug nor adds a feature
+#   docs     – updates to documentation (README, markdown, etc.)
+#   style    – formatting, white-space, semi-colons (no code logic change)
+#   test     – new or corrected tests
+#   perf     – performance improvements
+#   ci       – continuous integration related
+#   build    – build system or external dependencies
+#   revert   – reverts a previous commit
+#   add      – adding a new file, function, method, variable
+#   remove   – removing a file, function, method, variable
+#   update   – updating a file, function, method, variable
+#   rename   – renaming a file, function, method, variable
+#   move     – moving a file, function, method, variable
+#   copy     – copying a file, function, method, variable
+#   security – vulnerabilities
+#   hotfix   – a bug hot fix has occurred
+#
+# Signed-off-by: @gurkanfikretgunak
