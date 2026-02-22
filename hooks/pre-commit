@@ -1,0 +1,13 @@
+#!/bin/bash
+# Pre-commit hook - run before each commit
+# Install: cp hooks/pre-commit .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit
+
+set -e
+echo "Running pre-commit checks..."
+
+# Flutter analyze (if kafa_topu_game exists)
+if [ -d "kafa_topu_game" ]; then
+  (cd kafa_topu_game && flutter analyze) || exit 1
+fi
+
+echo "Pre-commit OK."
