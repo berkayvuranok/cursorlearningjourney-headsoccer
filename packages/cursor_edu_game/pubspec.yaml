@@ -1,0 +1,14 @@
+name: cursor_edu_game
+description: Cursor Edu game - Flame game infrastructure, base components (Head Soccer)
+version: 1.0.0
+publish_to: 'none'
+
+environment:
+  sdk: ^3.10.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flame: ^1.18.0
+  cursor_edu_core:
+    path: ../cursor_edu_core

@@ -1,0 +1,15 @@
+name: cursor_edu_core
+description: Cursor Edu core - Base classes, MasterView, BLoC/Cubit, DI, routing (MasterFabric style)
+version: 1.0.0
+publish_to: 'none'
+
+environment:
+  sdk: ^3.10.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  equatable: ^2.0.5
+  flutter_bloc: ^8.1.6
+  get_it: ^8.0.2
+  go_router: ^14.6.2
