@@ -1,0 +1,32 @@
+---
+description: Flutter Flame oyun geliştirme pattern'leri ve kuralları
+globs: "**/*.dart"
+alwaysApply: false
+---
+
+# Flutter Flame Oyun Kuralları
+
+## Genel Kurallar
+
+- `FlameGame` veya `Component` extend ederken `@override` kullan
+- Sprite/asset yüklemede `images.load()` veya `loadSprite()` kullan
+- Collision için `HitboxRectangle` veya `HitboxCircle` tercih et
+
+## Component Yapısı
+
+```dart
+class GameComponent extends PositionComponent with HasGameRef<KafaTopuGame> {
+  @override
+  Future<void> onLoad() async {
+    await super.onLoad();
+    // Hitbox ekle
+    add(RectangleHitbox());
+  }
+}
+```
+
+## Performans
+
+- `update(dt)` içinde ağır hesaplama yapma
+- Sprite sheet kullan, tek tek asset yükleme
+- Object pooling top/particle gibi sık oluşan nesneler için

@@ -1,0 +1,29 @@
+{
+  "name": "ai-pr-bot",
+  "displayName": "AI PR Bot",
+  "version": "1.0.0",
+  "description": "AI destekli Pull Request oluşturma, kod inceleme, commit mesajı üretme ve PR otomasyon bot'u. GitHub/GitLab entegrasyonu.",
+  "author": {
+    "name": "Cursor Edu",
+    "email": "edu@cursor.com"
+  },
+  "license": "MIT",
+  "keywords": [
+    "pr",
+    "pull-request",
+    "code-review",
+    "git",
+    "github",
+    "automation",
+    "ai-bot"
+  ],
+  "category": "developer-tools",
+  "tags": [
+    "code-review",
+    "automation",
+    "ci-cd"
+  ],
+  "skills": "./skills/",
+  "rules": "./rules/",
+  "commands": "./commands/"
+}

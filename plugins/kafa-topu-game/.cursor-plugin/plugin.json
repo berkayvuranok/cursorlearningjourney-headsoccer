@@ -1,0 +1,28 @@
+{
+  "name": "kafa-topu-game",
+  "displayName": "Kafa Topu Game",
+  "version": "1.0.0",
+  "description": "Flutter Flame ile kafa topu (head soccer) benzeri multiplayer futbol oyunu geliştirme. Oyun mekanikleri, fizik, ağ senkronizasyonu ve UI pattern'leri.",
+  "author": {
+    "name": "Cursor Edu",
+    "email": "edu@cursor.com"
+  },
+  "license": "MIT",
+  "keywords": [
+    "flutter",
+    "flame",
+    "game",
+    "multiplayer",
+    "head-soccer",
+    "football",
+    "kafa-topu"
+  ],
+  "category": "games",
+  "tags": [
+    "flutter-game",
+    "multiplayer",
+    "sports"
+  ],
+  "skills": "./skills/",
+  "rules": "./rules/"
+}

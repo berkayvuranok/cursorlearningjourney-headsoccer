@@ -1,0 +1,19 @@
+---
+description: AI PR Bot coding and PR conventions
+globs: "**/ai-pr-bot/**"
+alwaysApply: false
+---
+
+# AI PR Bot Rules
+
+## Git Conventions
+
+- Branch: `feature/`, `fix/`, `chore/` prefix
+- Commit: Conventional Commits format
+- PR: Single-focus, split large PRs
+
+## Bot Behavior
+
+- Never log tokens/secrets
+- Respect API rate limits
+- Return meaningful message on error
