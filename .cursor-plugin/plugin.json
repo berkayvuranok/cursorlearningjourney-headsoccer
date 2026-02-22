@@ -1,0 +1,22 @@
+{
+  "name": "cursor-edu",
+  "displayName": "Cursor Edu",
+  "version": "1.0.0",
+  "description": "Flutter architecture plugin for Cursor Edu: MasterFabric-style MVVM+BLoC, Flame game development, Head Soccer multiplayer, AI PR Bot, and project conventions",
+  "author": {
+    "name": "Cursor Edu",
+    "email": "edu@cursor.com",
+    "url": "https://github.com/cursor-edu",
+    "github": "https://github.com/cursor-edu"
+  },
+  "keywords": ["flutter", "bloc", "cubit", "mvvm", "flame", "game", "kafa-topu", "ai-pr-bot", "dart", "architecture", "mcp"],
+  "repository": "https://github.com/cursor-edu/cursor_edu",
+  "homepage": "https://github.com/cursor-edu/cursor_edu",
+  "license": "MIT",
+  "rules": ".cursor/rules",
+  "agents": ".cursor/agents",
+  "skills": ".cursor/skills",
+  "commands": "commands",
+  "hooks": "hooks",
+  "mcp": ".cursor/mcp.json"
+}
