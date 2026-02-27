@@ -266,7 +266,7 @@ class _ProfileCardState extends State<_ProfileCard> {
             const SizedBox(height: 12),
             DropdownButtonFormField<PlayerSkin>(
               key: ValueKey<PlayerSkin>(_skin),
-              initialValue: _skin,
+              value: _skin,
               dropdownColor: Colors.black87,
               decoration: const InputDecoration(labelText: 'Kostüm'),
               items: PlayerSkin.values

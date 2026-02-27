@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:cursor_edu_core/cursor_edu_core.dart';
 import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -15,6 +14,29 @@ import 'src/features/profile/presentation/profile_screen.dart';
 import 'src/features/auth/presentation/login_screen.dart';
 import 'src/features/auth/presentation/signup_screen.dart';
 
+/// Asset .env dosyasından SUPABASE_URL ve SUPABASE_ANON_KEY okur.
+Future<(String?, String?)> _loadEnvFromAsset() async {
+  String? envUrl;
+  String? envKey;
+  try {
+    final data = await rootBundle.loadString('.env');
+    for (final line in data.split('\n')) {
+      final t = line.trim();
+      if (t.isEmpty || t.startsWith('#')) continue;
+      final idx = t.indexOf('=');
+      if (idx <= 0) continue;
+      final k = t.substring(0, idx).trim();
+      var v = t.substring(idx + 1).trim();
+      if (v.length >= 2 && ((v.startsWith('"') && v.endsWith('"')) || (v.startsWith("'") && v.endsWith("'")))) {
+        v = v.substring(1, v.length - 1);
+      }
+      if (k == 'SUPABASE_URL') envUrl = v;
+      if (k == 'SUPABASE_ANON_KEY') envKey = v;
+    }
+  } catch (_) {}
+  return (envUrl, envKey);
+}
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
@@ -23,14 +45,8 @@ Future<void> main() async {
   ]);
   configureDependencies();
 
-  try {
-    await dotenv.load(fileName: '.env');
-  } catch (_) {}
-
-  SupabaseConfig.init(
-    url: dotenv.env['SUPABASE_URL'],
-    key: dotenv.env['SUPABASE_ANON_KEY'],
-  );
+  final (envUrl, envKey) = await _loadEnvFromAsset();
+  SupabaseConfig.init(url: envUrl, key: envKey);
 
   if (SupabaseConfig.isConfigured) {
     await Supabase.initialize(

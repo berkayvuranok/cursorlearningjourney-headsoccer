@@ -27,6 +27,8 @@ class _GameScreenState extends State<GameScreen> {
     super.initState();
     getOrCreateDeviceId().then((id) {
       if (mounted) setState(() => _deviceId = id);
+    }).catchError((_) {
+      if (mounted) setState(() => _deviceId = '');
     });
     _game = KafaTopuGame(onGameOver: _onGameOver);
     if (widget.isOnline) {
