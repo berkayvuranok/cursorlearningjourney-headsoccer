@@ -10,9 +10,9 @@ class GoalComponent extends PositionComponent
 
   GoalComponent({required this.isLeft})
       : super(
-          position: Vector2(isLeft ? 0 : 750, 180),
-          size: Vector2(50, 170),
-          anchor: isLeft ? Anchor.centerLeft : Anchor.centerRight,
+          position: Vector2(isLeft ? 0 : KafaTopuGame.fieldWidth, KafaTopuGame.groundY),
+          size: Vector2(50, KafaTopuGame.goalHeight),
+          anchor: isLeft ? Anchor.bottomLeft : Anchor.bottomRight,
         );
 
   @override

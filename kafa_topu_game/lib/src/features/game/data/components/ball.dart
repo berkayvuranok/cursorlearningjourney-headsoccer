@@ -55,10 +55,8 @@ class BallComponent extends PositionComponent
     }
   }
 
-  static const double goalTop = 180;
-  static const double goalBottom = 350;
-  static const double goalLeftEdge = 50;
-  static const double goalRightEdge = 750;
+  static double get goalBottom => KafaTopuGame.groundY;
+  static double get goalTop => goalBottom - KafaTopuGame.goalHeight;
 
   @override
   void update(double dt) {
@@ -74,10 +72,10 @@ class BallComponent extends PositionComponent
         velocityX *= -bounceDamping;
         position.x = KafaTopuGame.ballRadius;
       }
-    } else if (position.x >= 800 - KafaTopuGame.ballRadius) {
+    } else if (position.x >= KafaTopuGame.fieldWidth - KafaTopuGame.ballRadius) {
       if (!inGoalZone) {
         velocityX *= -bounceDamping;
-        position.x = 800 - KafaTopuGame.ballRadius;
+        position.x = KafaTopuGame.fieldWidth - KafaTopuGame.ballRadius;
       }
     }
 
