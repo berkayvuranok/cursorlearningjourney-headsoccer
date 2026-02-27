@@ -26,69 +26,83 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
         child: SafeArea(
-          child: Column(
-            children: [
-              const SizedBox(height: 24),
-              Text(
-                'Kendini Geliştir',
-                style: theme.textTheme.titleLarge?.copyWith(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 12),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: _SectionCard(
-                  title: 'Tek / Lokal',
-                  subtitle: 'Kendi başına veya aynı cihazda 2 kişi',
-                  icon: Icons.sports_soccer,
-                  onTap: () => context.go(AppRoutes.game),
-                ),
-              ),
-              const SizedBox(height: 32),
-              Text(
-                'Online Oyna',
-                style: theme.textTheme.titleLarge?.copyWith(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 12),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: _SectionCard(
-                  title: 'Online Maç',
-                  subtitle: 'Farklı cihazdan rakip ile oyna',
-                  icon: Icons.wifi,
-                  onTap: () => context.go(AppRoutes.gameOnline),
-                ),
-              ),
-              const Spacer(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TextButton.icon(
-                    onPressed: () => context.push(AppRoutes.rank),
-                    icon: const Icon(Icons.leaderboard, color: Colors.white70),
-                    label: const Text('Rank', style: TextStyle(color: Colors.white70)),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const SizedBox(height: 24),
+                Text(
+                  'Kendini Geliştir',
+                  style: theme.textTheme.titleLarge?.copyWith(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
                   ),
-                  const SizedBox(width: 24),
-                  TextButton.icon(
-                    onPressed: () => context.push(AppRoutes.tournament),
-                    icon: const Icon(Icons.emoji_events, color: Colors.white70),
-                    label: const Text('Turnuva', style: TextStyle(color: Colors.white70)),
+                ),
+                const SizedBox(height: 12),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  child: _SectionCard(
+                    title: 'Tek / Lokal',
+                    subtitle: 'Kendi başına veya aynı cihazda 2 kişi',
+                    icon: Icons.sports_soccer,
+                    onTap: () => context.go(AppRoutes.game),
                   ),
-                ],
-              ),
-              const SizedBox(height: 16),
-              IconButton(
-                icon: const Icon(Icons.settings, color: Colors.white70),
-                onPressed: () => context.push(AppRoutes.settings),
-                tooltip: 'Settings',
-              ),
-              const SizedBox(height: 24),
-            ],
+                ),
+                const SizedBox(height: 32),
+                Text(
+                  'Online Oyna',
+                  style: theme.textTheme.titleLarge?.copyWith(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 12),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  child: _SectionCard(
+                    title: 'Online Maç',
+                    subtitle: 'Farklı cihazdan rakip ile oyna',
+                    icon: Icons.wifi,
+                    onTap: () => context.go(AppRoutes.gameOnline),
+                  ),
+                ),
+                const SizedBox(height: 32),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextButton.icon(
+                      onPressed: () => context.push(AppRoutes.rank),
+                      icon: const Icon(Icons.leaderboard, color: Colors.white70),
+                      label: const Text('Rank', style: TextStyle(color: Colors.white70)),
+                    ),
+                    const SizedBox(width: 24),
+                    TextButton.icon(
+                      onPressed: () => context.push(AppRoutes.tournament),
+                      icon: const Icon(Icons.emoji_events, color: Colors.white70),
+                      label: const Text('Turnuva', style: TextStyle(color: Colors.white70)),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    IconButton(
+                      icon: const Icon(Icons.person, color: Colors.white70),
+                      onPressed: () => context.push(AppRoutes.profile),
+                      tooltip: 'Profil',
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.settings, color: Colors.white70),
+                      onPressed: () => context.push(AppRoutes.settings),
+                      tooltip: 'Settings',
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 24),
+              ],
+            ),
           ),
         ),
       ),

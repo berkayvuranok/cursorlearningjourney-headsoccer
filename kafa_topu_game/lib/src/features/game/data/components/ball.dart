@@ -66,14 +66,27 @@ class BallComponent extends PositionComponent
     position.x += velocityX;
     position.y += velocityY;
 
-    final inGoalZone = position.y >= goalTop && position.y <= goalBottom;
+    final inGoalZoneY = position.y >= goalTop && position.y <= goalBottom;
+    const goalWidth = 50.0;
+    final fullyInLeftGoal = inGoalZoneY && position.x >= 0 && position.x <= goalWidth;
+    final fullyInRightGoal = inGoalZoneY &&
+        position.x >= KafaTopuGame.fieldWidth - goalWidth &&
+        position.x <= KafaTopuGame.fieldWidth;
+    if (fullyInLeftGoal) {
+      game.onGoalScored(true);
+      return;
+    }
+    if (fullyInRightGoal) {
+      game.onGoalScored(false);
+      return;
+    }
     if (position.x <= KafaTopuGame.ballRadius) {
-      if (!inGoalZone) {
+      if (!inGoalZoneY) {
         velocityX *= -bounceDamping;
         position.x = KafaTopuGame.ballRadius;
       }
     } else if (position.x >= KafaTopuGame.fieldWidth - KafaTopuGame.ballRadius) {
-      if (!inGoalZone) {
+      if (!inGoalZoneY) {
         velocityX *= -bounceDamping;
         position.x = KafaTopuGame.fieldWidth - KafaTopuGame.ballRadius;
       }

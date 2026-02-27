@@ -2,7 +2,6 @@ import 'dart:ui';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import '../kafa_topu_game.dart';
-import 'ball.dart';
 
 class GoalComponent extends PositionComponent
     with HasGameReference<KafaTopuGame>, CollisionCallbacks {
@@ -18,14 +17,6 @@ class GoalComponent extends PositionComponent
   @override
   Future<void> onLoad() async {
     await add(RectangleHitbox());
-  }
-
-  @override
-  void onCollision(Set<Vector2> intersectionPoints, PositionComponent other) {
-    super.onCollision(intersectionPoints, other);
-    if (other is BallComponent) {
-      game.onGoalScored(isLeft);
-    }
   }
 
   @override

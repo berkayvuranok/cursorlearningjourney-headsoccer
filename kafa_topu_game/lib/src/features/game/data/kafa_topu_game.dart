@@ -9,15 +9,22 @@ import 'components/goal.dart';
 import 'components/ground.dart';
 
 class KafaTopuGame extends BaseGame {
+  KafaTopuGame({this.onGameOver});
+
+  final void Function(int score1, int score2)? onGameOver;
+
   late PlayerComponent player1;
   late PlayerComponent player2;
   late BallComponent ball;
   late GoalComponent goalLeft;
   late GoalComponent goalRight;
   late TextComponent scoreText;
+  late TextComponent goalOverlayText;
   int score1 = 0;
   int score2 = 0;
+  int _goalOverlayFrames = 0;
 
+  static const int goalLimit = 5;
   static const double fieldWidth = 800;
   static const double groundY = 350;
   static const double goalHeight = 150;
@@ -66,13 +73,28 @@ class KafaTopuGame extends BaseGame {
       ..anchor = Anchor.topCenter
       ..position = Vector2(400, 20);
     add(scoreText);
+
+    goalOverlayText = TextComponent(
+      text: 'GOL!',
+      textRenderer: TextPaint(
+        style: const TextStyle(
+          color: Color(0xFFFFFF00),
+          fontSize: 72,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    )
+      ..anchor = Anchor.center
+      ..position = Vector2(400, 175)
+      ..scale = Vector2.zero();
+    add(goalOverlayText);
   }
 
   int _goalCooldownFrames = 0;
 
   void onGoalScored(bool isLeftGoal) {
     if (_goalCooldownFrames > 0) return;
-    _goalCooldownFrames = 30;
+    _goalCooldownFrames = 90;
 
     if (isLeftGoal) {
       score2++;
@@ -80,7 +102,12 @@ class KafaTopuGame extends BaseGame {
       score1++;
     }
     scoreText.text = '$score1 - $score2';
-    resetPositions();
+    goalOverlayText.scale = Vector2.all(1);
+    _goalOverlayFrames = 45;
+
+    if (score1 >= goalLimit || score2 >= goalLimit) {
+      onGameOver?.call(score1, score2);
+    }
   }
 
   void resetPositions() {
@@ -130,6 +157,15 @@ class KafaTopuGame extends BaseGame {
   void update(double dt) {
     super.update(dt);
     if (_goalCooldownFrames > 0) _goalCooldownFrames--;
+    if (_goalOverlayFrames > 0) {
+      _goalOverlayFrames--;
+      if (_goalOverlayFrames == 0) {
+        goalOverlayText.scale = Vector2.zero();
+        if (score1 < goalLimit && score2 < goalLimit) {
+          resetPositions();
+        }
+      }
+    }
     if (_keysPressed.contains(LogicalKeyboardKey.keyA)) {
       player1.moveLeft();
     }

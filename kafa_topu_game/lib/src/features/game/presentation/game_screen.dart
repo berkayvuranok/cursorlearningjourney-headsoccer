@@ -5,6 +5,8 @@ import 'package:cursor_edu_core/cursor_edu_core.dart';
 
 import '../data/kafa_topu_game.dart';
 import '../../online/data/online_session_service.dart';
+import '../../profile/data/profile_repository.dart';
+import '../../../core/device_id.dart';
 
 class GameScreen extends StatefulWidget {
   const GameScreen({super.key, this.isOnline = false});
@@ -17,18 +19,59 @@ class GameScreen extends StatefulWidget {
 
 class _GameScreenState extends State<GameScreen> {
   final _session = OnlineSessionService.instance;
+  late final KafaTopuGame _game;
+  String? _deviceId;
+
+  @override
+  void initState() {
+    super.initState();
+    getOrCreateDeviceId().then((id) {
+      if (mounted) setState(() => _deviceId = id);
+    });
+    _game = KafaTopuGame(onGameOver: _onGameOver);
+    if (widget.isOnline) {
+      final playerId = 'p_${DateTime.now().millisecondsSinceEpoch}';
+      _session.joinRoom('default', playerId);
+    }
+  }
+
+  void _onGameOver(int score1, int score2) {
+    final deviceId = _deviceId ?? '';
+    final winnerId = score1 > score2 ? deviceId : 'local_guest';
+    ProfileRepository.instance.insertMatch(
+      player1DeviceId: deviceId,
+      player2DeviceId: 'local_guest',
+      score1: score1,
+      score2: score2,
+      winnerDeviceId: score1 != score2 ? winnerId : null,
+      isOnline: widget.isOnline,
+    );
+    if (!mounted) return;
+    showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (ctx) => AlertDialog(
+        title: Text(score1 >= KafaTopuGame.goalLimit ? 'Sol kazandı!' : 'Sağ kazandı!'),
+        content: Text('Skor: $score1 - $score2'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(),
+            child: const Text('Tamam'),
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   void dispose() {
+    if (widget.isOnline) _session.leaveRoom();
     _session.clearOpponentInSettings();
     super.dispose();
   }
 
   void _openSettings() {
-    if (widget.isOnline) {
-      _session.notifyImInSettings();
-      // Other device would get setOpponentInSettings() via backend.
-    }
+    if (widget.isOnline) _session.notifyImInSettings();
     context.push(AppRoutes.settings, extra: {'fromOnlineGame': widget.isOnline});
   }
 
@@ -39,13 +82,21 @@ class _GameScreenState extends State<GameScreen> {
       body: Stack(
         fit: StackFit.expand,
         children: [
-          GameWidget<KafaTopuGame>(game: KafaTopuGame()),
+          IgnorePointer(
+            child: GameWidget<KafaTopuGame>(game: _game),
+          ),
           Positioned(
             top: 12,
             left: 12,
             child: _GameOverlayButton(
               icon: Icons.arrow_back_ios_new,
-              onTap: () => context.pop(),
+              onTap: () {
+                if (context.canPop()) {
+                  context.pop();
+                } else {
+                  context.go(AppRoutes.home);
+                }
+              },
             ),
           ),
           Positioned(
@@ -133,9 +184,12 @@ class _GameOverlayButton extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(12),
-        child: Padding(
-          padding: const EdgeInsets.all(12),
-          child: Icon(icon, color: Colors.white, size: 24),
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
+          child: Padding(
+            padding: const EdgeInsets.all(12),
+            child: Icon(icon, color: Colors.white, size: 24),
+          ),
         ),
       ),
     );

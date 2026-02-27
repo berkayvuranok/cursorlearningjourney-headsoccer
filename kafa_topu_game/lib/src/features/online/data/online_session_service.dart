@@ -1,12 +1,16 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 
+import 'supabase_game_sync.dart';
+
 /// Tracks online match state. When one player opens settings, the other sees
 /// "Opponent in settings - waiting" with a 10s countdown.
-/// TODO(backend): Sync via WebSocket/Supabase so the other device receives this.
+/// Uses Supabase Realtime broadcast when configured.
 class OnlineSessionService extends ChangeNotifier {
   OnlineSessionService._();
+
   static final OnlineSessionService instance = OnlineSessionService._();
+  SupabaseGameSync? _sync;
 
   static const int settingsWaitSeconds = 10;
 
@@ -17,16 +21,25 @@ class OnlineSessionService extends ChangeNotifier {
   bool get opponentInSettings => _opponentInSettings;
   int get countdownSeconds => _countdownSeconds;
 
-  /// Call when THIS player opens settings (sends to backend; other device sets opponentInSettings).
+  /// Join room for online match (call when entering online game).
+  Future<void> joinRoom(String roomId, String myPlayerId) async {
+    _sync ??= SupabaseGameSync(instance);
+    await _sync!.joinRoom(roomId, myPlayerId);
+  }
+
+  /// Leave room (call when leaving online game).
+  Future<void> leaveRoom() => _sync?.leaveRoom() ?? Future.value();
+
+  /// Call when THIS player opens settings (sends via Supabase; other device sets opponentInSettings).
   void notifyImInSettings() {
     _opponentInSettings = false;
     _countdownSeconds = 0;
     _countdownTimer?.cancel();
     notifyListeners();
-    // TODO(backend): Send "player_entered_settings" to peer.
+    _sync?.sendPlayerEnteredSettings();
   }
 
-  /// Call when the OTHER player opened settings (received from backend).
+  /// Call when the OTHER player opened settings (received from Supabase or test).
   void setOpponentInSettings() {
     if (_opponentInSettings) return;
     _opponentInSettings = true;
@@ -44,9 +57,9 @@ class OnlineSessionService extends ChangeNotifier {
     notifyListeners();
   }
 
-  /// Call when THIS player closed settings (notify peer to clear waiting).
+  /// Call when THIS player closed settings (notify peer via Supabase).
   void notifyImBackFromSettings() {
-    // TODO(backend): Send "player_left_settings" to peer.
+    _sync?.sendPlayerLeftSettings();
   }
 
   /// Call when WE receive "opponent left settings" from backend.
