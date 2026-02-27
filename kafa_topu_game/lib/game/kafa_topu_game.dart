@@ -21,7 +21,9 @@ class KafaTopuGame extends FlameGame
   int score1 = 0;
   int score2 = 0;
 
+  static const double fieldWidth = 800;
   static const double groundY = 350;
+  static const double goalHeight = 150;
   static const double playerRadius = 35;
   static const double ballRadius = 25;
   static const double jumpForce = -15;
