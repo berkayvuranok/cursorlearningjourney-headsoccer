@@ -6,6 +6,8 @@ import 'package:go_router/go_router.dart';
 import 'src/features/home/presentation/home_screen.dart';
 import 'src/features/game/presentation/game_screen.dart';
 import 'src/features/settings/presentation/settings_screen.dart';
+import 'src/features/rank/presentation/rank_screen.dart';
+import 'src/features/tournament/presentation/tournament_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,11 +33,27 @@ class KafaTopuApp extends StatelessWidget {
         ),
         GoRoute(
           path: AppRoutes.game,
-          builder: (context, state) => const GameScreen(),
+          builder: (context, state) => const GameScreen(isOnline: false),
+        ),
+        GoRoute(
+          path: AppRoutes.gameOnline,
+          builder: (context, state) => const GameScreen(isOnline: true),
         ),
         GoRoute(
           path: AppRoutes.settings,
-          builder: (context, state) => const SettingsScreen(),
+          builder: (context, state) {
+            final extra = state.extra is Map ? state.extra as Map<String, dynamic> : null;
+            final fromOnlineGame = extra?['fromOnlineGame'] == true;
+            return SettingsScreen(fromOnlineGame: fromOnlineGame);
+          },
+        ),
+        GoRoute(
+          path: AppRoutes.rank,
+          builder: (context, state) => const RankScreen(),
+        ),
+        GoRoute(
+          path: AppRoutes.tournament,
+          builder: (context, state) => const TournamentScreen(),
         ),
       ],
     );

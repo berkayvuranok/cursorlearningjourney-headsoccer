@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kafa_topu_game/src/shared/shared.dart';
+import 'package:kafa_topu_game/src/app/widgets/app_bar.dart';
+import 'package:kafa_topu_game/src/features/online/data/online_session_service.dart';
 
 class SettingsScreen extends StatefulWidget {
-  const SettingsScreen({super.key});
+  const SettingsScreen({super.key, this.fromOnlineGame = false});
+
+  final bool fromOnlineGame;
 
   @override
   State<SettingsScreen> createState() => _SettingsScreenState();
@@ -22,8 +26,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
     _name2Controller = TextEditingController(text: _manager.player2.name);
   }
 
+  void _onBack() {
+    if (widget.fromOnlineGame) {
+      OnlineSessionService.instance.notifyImBackFromSettings();
+    }
+    context.pop();
+  }
+
   @override
   void dispose() {
+    if (widget.fromOnlineGame) {
+      OnlineSessionService.instance.notifyImBackFromSettings();
+    }
     _name1Controller.dispose();
     _name2Controller.dispose();
     super.dispose();
@@ -33,13 +47,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new),
-          onPressed: () => context.pop(),
-          tooltip: 'Back',
-        ),
-        title: const Text('Settings'),
+      appBar: HeadSoccerAppBar(
+        title: 'AYARLAR',
+        showBack: true,
+        onBack: _onBack,
       ),
       body: Container(
         decoration: BoxDecoration(
