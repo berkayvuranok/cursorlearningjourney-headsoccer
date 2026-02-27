@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 
 import 'src/features/home/presentation/home_screen.dart';
 import 'src/features/game/presentation/game_screen.dart';
+import 'src/features/settings/presentation/settings_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,6 +32,10 @@ class KafaTopuApp extends StatelessWidget {
         GoRoute(
           path: AppRoutes.game,
           builder: (context, state) => const GameScreen(),
+        ),
+        GoRoute(
+          path: AppRoutes.settings,
+          builder: (context, state) => const SettingsScreen(),
         ),
       ],
     );
