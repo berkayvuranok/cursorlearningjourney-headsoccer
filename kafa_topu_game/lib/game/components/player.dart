@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 import '../kafa_topu_game.dart';
+import 'package:kafa_topu_game/src/shared/player_profile.dart';
 
 class PlayerComponent extends PositionComponent
     with HasGameReference<KafaTopuGame> {
@@ -81,8 +82,10 @@ class PlayerComponent extends PositionComponent
   @override
   void render(Canvas canvas) {
     super.render(canvas);
+    final profile =
+        PlayerProfileManager.instance.profileForId(playerId);
     final paint = Paint()
-      ..color = playerId == 1 ? const Color(0xFF4CAF50) : const Color(0xFF2196F3)
+      ..color = profile.skin.color
       ..style = PaintingStyle.fill;
 
     canvas.drawCircle(
