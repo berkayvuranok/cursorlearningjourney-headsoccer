@@ -9,66 +9,89 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
-      body: GestureDetector(
-        onTap: () => context.go(AppRoutes.game),
-        behavior: HitTestBehavior.opaque,
-        child: Container(
-          width: double.infinity,
-          height: double.infinity,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                Colors.green.shade900,
-                Colors.green.shade800,
-                Colors.green.shade700,
-              ],
-            ),
-          ),
-          child: SafeArea(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  '⚽ HEAD SOCCER ⚽',
-                  style: theme.textTheme.headlineLarge?.copyWith(
-                    fontSize: 40,
-                    fontWeight: FontWeight.w800,
-                    color: Colors.white,
-                    letterSpacing: 2,
-                  ),
+      body: Stack(
+        children: [
+          GestureDetector(
+            onTap: () => context.go(AppRoutes.game),
+            behavior: HitTestBehavior.opaque,
+            child: Container(
+              width: double.infinity,
+              height: double.infinity,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    Colors.green.shade900,
+                    Colors.green.shade800,
+                    Colors.green.shade700,
+                  ],
                 ),
-                const SizedBox(height: 16),
-                Text(
-                  '2-Player Local Multiplayer',
-                  style: theme.textTheme.titleMedium?.copyWith(
-                    color: Colors.white.withValues(alpha: 0.95),
-                  ),
-                ),
-                const SizedBox(height: 32),
-                Text(
-                  'TAP TO PLAY',
-                  style: theme.textTheme.titleLarge?.copyWith(
-                    color: Colors.white.withValues(alpha: 0.9),
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                const SizedBox(height: 48),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 32),
-                  child: Text(
-                    'Player 1: W A D  |  Player 2: ↑ ← →',
-                    textAlign: TextAlign.center,
-                    style: theme.textTheme.bodySmall?.copyWith(
-                      color: Colors.white.withValues(alpha: 0.75),
+              ),
+              child: SafeArea(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      '⚽ HEAD SOCCER ⚽',
+                      style: theme.textTheme.headlineLarge?.copyWith(
+                        fontSize: 40,
+                        fontWeight: FontWeight.w800,
+                        color: Colors.white,
+                        letterSpacing: 2,
+                      ),
                     ),
-                  ),
+                    const SizedBox(height: 16),
+                    Text(
+                      '2-Player Local Multiplayer',
+                      style: theme.textTheme.titleMedium?.copyWith(
+                        color: Colors.white.withValues(alpha: 0.95),
+                      ),
+                    ),
+                    const SizedBox(height: 32),
+                    Text(
+                      'TAP TO PLAY',
+                      style: theme.textTheme.titleLarge?.copyWith(
+                        color: Colors.white.withValues(alpha: 0.9),
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(height: 48),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 32),
+                      child: Text(
+                        'Player 1: W A D  |  Player 2: ↑ ← →',
+                        textAlign: TextAlign.center,
+                        style: theme.textTheme.bodySmall?.copyWith(
+                          color: Colors.white.withValues(alpha: 0.75),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
-        ),
+          SafeArea(
+            child: Align(
+              alignment: Alignment.topRight,
+              child: Padding(
+                padding: const EdgeInsets.all(12),
+                child: CircleAvatar(
+                  backgroundColor: Colors.black.withValues(alpha: 0.35),
+                  child: IconButton(
+                    tooltip: 'Settings',
+                    icon: const Icon(
+                      Icons.settings,
+                      color: Colors.white,
+                    ),
+                    onPressed: () => context.push(AppRoutes.settings),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
